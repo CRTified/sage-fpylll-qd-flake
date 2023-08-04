@@ -69,11 +69,12 @@
           inherit (pkgs) sage python3 libqd fplll;
           py3-with-fpylll = (pkgs.python3.withPackages (ps: [ ps.fpylll ]));
         };
-        apps = {
-          sage = {
+        apps = let sageApp = {
             type = "app";
             program = "${pkgs.sage}/bin/sage";
-          };
+          }; in {
+          default = sageApp;
+          sage = sageApp;
           notebook = {
             type = "app";
             program = toString (pkgs.writeScript "sage-notebook" ''
