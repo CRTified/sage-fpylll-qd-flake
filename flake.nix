@@ -12,6 +12,15 @@
 
           overlays = [
             (final: prev: {
+              # Replace SEAdata with the big version, to get a faster SEA for ECC
+              pari-seadata-small = prev.pari-seadata-small.overrideAttrs (old: {
+                src = prev.fetchurl {
+                  url = "http://pari.math.u-bordeaux.fr/pub/pari/packages/seadata-big.tar";
+                  hash = "sha256-fE2yYkgIpbvSugD4tkSkOfBQhTLv1oCiR2EP3VgipfI=";
+                };
+              });
+            })
+            (final: prev: {
               # QD Package
               libqd = final.callPackage ({ lib, stdenv, fetchurl }:
                 stdenv.mkDerivation rec {
